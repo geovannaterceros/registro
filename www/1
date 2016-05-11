@@ -1,0 +1,6 @@
+<ion-list>
+    <ion-item ng-repeat="listas in lista">
+        <h2>{{listas.title}}</h2>
+        <p></p>
+    </ion-item>
+</ion-list>

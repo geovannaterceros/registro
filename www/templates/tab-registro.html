@@ -1,0 +1,68 @@
+<ion-view view-title="Lista Telefonica">
+  <ion-content>
+    <ion-list>
+        <div class = "bar bar-header item-input-inset">
+              <label class = "item-input-wrapper">
+                   <i class = "icon ion-ios-search placeholder-icon"></i>
+                     <input  ng-model = "criterioBusqueda" type="search" placeholder="Buscar">
+              </label>
+              <button class = "button button-clear"> Cancelar</button>
+        </div>
+        <ui-alert></ui-alert>
+
+         <div class="row row-top">
+             <div class= "col"></div>
+             <div class= "col"><a href="" ng-click="buscarPor('nombre')">Nombre</a></div>
+             <div class= "col">Telefono</div>
+             <div class= "col">Operador</div>
+             <div class= "col">Data</div>
+         </div>
+          <div class="row row-center"  ng-class= "{seleccionado: contacto.seleccionado}" ng-repeat = "contacto in contactos | filter:criterioBusqueda | orderBy:datoFiltrado:direccionOrden" >
+            <div class= "col"><input type = "checkbox" ng-model="contacto.seleccionado"></div>
+            <div class= "col">{{contacto.nombre | nombre | limitS}}</div>
+            <div class= "col">{{contacto.telefono}}</div>
+            <div class= "col">{{contacto.operadores.nombreO}}</div>
+            <div class= "col">{{contacto.data | date:'dd/MM/yyyy'}}</div>
+         </div>
+        <form name= "contactoForm">
+             <div >
+                 <label class="item item-input">
+                     <input class= "form-control" type="text" placeholder= "Nombre" name="nombre"  ng-model= "contact.nombre" ng-required= "true" ng-minlength= "10">
+                </label>
+             </div>
+             <div > 
+                <label class="item item-input">
+                    <input class= "form-control" type="text" placeholder= "Telefono" name= "telefono" ng-model="contact.telefono" ng-required= "true" ng-minlength= "10" ng-pattern= "/^\d{4,5}-\d{4}$/"/>
+                 </label>
+            </div>
+            <div>
+                <select class="form-control" ng-model= "contact.operadora" ng-options="operadora.nombreO + '(' + (operadora.precio| currency)  + ')' group by operadora.categoria for operadora in operadores" >
+                    <option value= "" >Seleccionar Opcion</option>
+                 </select>
+            </div>
+        </form>
+        <div ng-show="contactoForm.nombre.$error.required" class="item item-divider">
+            <h3>Ingreso el nombre </h3>
+        </div> 
+        <div ng-show="contactoForm.nombre.$error.minlength" class="item item-divider">
+            <h3>Solo ingresas 10 letras </h3>
+        </div> 
+        <div ng-show="contactoForm.telefono.$error.required" class="item item-divider">
+            <h3>Ingreso el Telefono</h3>
+        </div> 
+        <div ng-show="contactoForm.telefono.$error.minlength" class="item item-divider">
+            <h3>Ingreso datos dddd-dddd</h3>
+        </div> 
+        <div>
+             <button ng-click= "adicionarContacto(contact)" class="button button-full button-positive" ng-disabled= "contactoForm.$invalid">
+                   AGREGAR CONTACTOS
+             </button>
+         </div>
+         <div>
+             <button ng-click= "eliminarContacto(contactos)" class="button button-full button-assertive">
+                   ELIMINAR CONTACTOS
+             </button>
+         </div>
+     </ion-list>
+  </ion-content>
+  </jion-view>>
